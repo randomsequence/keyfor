@@ -72,15 +72,13 @@ TBC
 
 #ENCRYPTION
 
-The default encryption in keyfor is AES 256, CBC mode. The encrypted data is a json dump of the username, password and any other information you want to encrypt:
+The default encryption in keyfor is AES 256, CBC mode, padded with [PKCS#7](http://en.wikipedia.org/wiki/Padding_(cryptography)#PKCS7). The encrypted data is a json dump of the username, password and any other information you want to encrypt:
 
     {
       "username": "mrwalker",
       "password": "secret101"
     }
     
-
-In CBC mode, the encrypted data needs to be a multiple of 16 bytes long. To achieve this the plain text is padded by 1-16 bytes all with a value equal to the number of padding bytes added.
 
 #FILE FORMAT
 
