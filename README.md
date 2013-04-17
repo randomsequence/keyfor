@@ -2,6 +2,8 @@
 
 keyfor - keeps usernames & passwords. Create, Retrieve, Edit Strong Passwords with AES Encryption
 
+Keyfor stores each username & password combination ('key') in a separate encrypted file which can be synced using Dropbox. A master password, stored in your system keyring, is used to encrypt and decrypt your keys.
+
 # SYNPOSIS
 
     keyfor [add | edit | delete | verify | refresh] [-u <username>] <label>
