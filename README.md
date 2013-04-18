@@ -1,26 +1,26 @@
-#KEY FOR __
+#Keyfor
 
 keyfor - keeps usernames & passwords. Create, Retrieve, Edit Strong Passwords with AES Encryption
 
 Keyfor stores each username & password combination ('key') in a separate encrypted file which can be synced using Dropbox. A master password, stored in your system keyring, is used to encrypt and decrypt your keys.
 
-# SYNPOSIS
+##Synposis
 
     keyfor [add | edit | delete | verify | refresh] [-u <username>] <label>
             all [verify | refresh | list]
             (-h | --help)
             --version
 
-# INSTALL
+##Install
 
 Latest development version:
 
  1. Clone the repo: `git clone https://github.com/randomsequence/keyfor.git`
  2. Install: `sudo python setup.py install`
 
-# COMMANDS
+##Commands
 
-## get
+### get
 
     keyfor example.com
 
@@ -31,7 +31,7 @@ What it does:
 3. Prints your username in bold, and any notes you stored.
 4. Copies your password to the clipboard
 
-## add
+### add
 
     keyfor add example.com
     
@@ -42,45 +42,46 @@ What it does:
 3. Writes the encrypted username and password to text file `example.com`
 4. Copies the new password to the clipboard
 
-## edit
+### edit
 
     keyfor edit example.com
 
-## delete
+### delete
 
     keyfor delete example.com
 
-## verify
+### verify
 
     keyfor verify example.com
 
 Verifies that the credentials stored for example.com were encrypted with your keyring password
 
-## refresh
+### refresh
 
     keyfor refresh example.com
 
-# DEPENDENCIES
+# Dependencies
 
 * [keyring](https://bitbucket.org/kang/python-keyring-lib)
 * [pycrypto](https://www.dlitz.net/software/pycrypto/)
 * [docopt](https://github.com/docopt/docopt)
 
-# CONFIGURATION
+## Configuration
 
 TBC
 
-#ENCRYPTION
+## Encryption
 
-The default encryption in keyfor is AES 256, CBC mode, padded with [PKCS#7](http://en.wikipedia.org/wiki/Padding_(cryptography)#PKCS7). The encrypted data is a json dump of the username, password and any other information you want to encrypt:
+The default encryption in keyfor is AES 256, CBC mode, padded with [PKCS#7][]. The encrypted data is a json dump of the username, password and any other information you want to encrypt:
 
     {
       "username": "mrwalker",
       "password": "secret101"
     }
     
+[PKCS#7]: http://en.wikipedia.org/wiki/Padding_(cryptography)#PKCS7
 
-#FILE FORMAT
+##File Format
 
 The encrypted, base-64 encoded data is stored in json format along with the base-64 encoded [iv](http://en.wikipedia.org/wiki/Initialisation_vector), a truncated, encrypted hash of the encryption password ('masterkey') and a string identifying the cypher:
 
@@ -93,7 +94,7 @@ The encrypted, base-64 encoded data is stored in json format along with the base
     }
 
 
-# NOTES
+## Notes
 
 I am by no means a security expert. The salted AES encryption used in keyfor is intended to be compatible with [CommonCrypto][] (and [RNCryptor][]) for ease of implementation on OS X, iOS and other platforms as explained by Rob Napier: [Properly encrypting with AES with CommonCrypto](http://robnapier.net/blog/aes-commoncrypto-564).
 
