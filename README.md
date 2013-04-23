@@ -46,9 +46,13 @@ What it does:
 
     keyfor edit example.com
 
+Edit the username & password for the specified key
+
 ### delete
 
     keyfor delete example.com
+    
+Deletes the data for the specified label 
 
 ### verify
 
@@ -60,28 +64,28 @@ Verifies that the credentials stored for example.com were encrypted with your ke
 
     keyfor refresh example.com
 
-## Dependencies
-
-* [keyring](https://bitbucket.org/kang/python-keyring-lib)
-* [pycrypto](https://www.dlitz.net/software/pycrypto/)
-* [docopt](https://github.com/docopt/docopt)
+Decrypts the named key, then re-encrypts using the current encryption scheme.
 
 ## Configuration
 
-Configuration is read from the file `~/.keyfor`. The defaults configuration is:
+Configuration is read from the file `~/.keyfor`. The default configuration is:
 
     [DEFAULT]
-    key_path = ~/Dropbox/apps/Key For
-    password_length = 12
+    key_path = ~/Dropbox/apps/Key For   # Where your key files are stored
+    password_length = 12                # Length for randomly generated passwords
 
 ## Encryption
 
-The default encryption in keyfor is AES 256, CBC mode, padded with [PKCS#7][]. The encrypted data is a UTF8-encoded [JSON][] dump of the username, password and any other information you want to encrypt:
+The default encryption scheme in keyfor is AES 256, CBC mode, padded with [PKCS#7][]. 
+
+The encrypted data is a UTF8-encoded [JSON][] dump of a map containing the username, password:
 
     {
       "username": "mrwalker",
       "password": "secret101"
     }
+
+Any other information in this map will be preserved in future writes.
     
 [PKCS#7]: http://en.wikipedia.org/wiki/Padding_(cryptography)#PKCS7
 [JSON]: http://json.org
@@ -98,6 +102,11 @@ The encrypted, base-64 encoded data is stored as UTF8-encoded JSON, along with t
         "label": "example.com"
     }
 
+## Dependencies
+
+    * [keyring](https://bitbucket.org/kang/python-keyring-lib)
+    * [pycrypto](https://www.dlitz.net/software/pycrypto/)
+    * [docopt](https://github.com/docopt/docopt)
 
 ## Notes
 
