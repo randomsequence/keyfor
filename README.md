@@ -60,7 +60,7 @@ Verifies that the credentials stored for example.com were encrypted with your ke
 
     keyfor refresh example.com
 
-# Dependencies
+## Dependencies
 
 * [keyring](https://bitbucket.org/kang/python-keyring-lib)
 * [pycrypto](https://www.dlitz.net/software/pycrypto/)
@@ -72,7 +72,7 @@ TBC
 
 ## Encryption
 
-The default encryption in keyfor is AES 256, CBC mode, padded with [PKCS#7][]. The encrypted data is a json dump of the username, password and any other information you want to encrypt:
+The default encryption in keyfor is AES 256, CBC mode, padded with [PKCS#7][]. The encrypted data is a UTF8-encoded [JSON][] dump of the username, password and any other information you want to encrypt:
 
     {
       "username": "mrwalker",
@@ -80,10 +80,11 @@ The default encryption in keyfor is AES 256, CBC mode, padded with [PKCS#7][]. T
     }
     
 [PKCS#7]: http://en.wikipedia.org/wiki/Padding_(cryptography)#PKCS7
+[JSON]: http://json.org
 
 ##File Format
 
-The encrypted, base-64 encoded data is stored in json format along with the base-64 encoded [iv](http://en.wikipedia.org/wiki/Initialisation_vector), a truncated, encrypted hash of the encryption password ('masterkey') and a string identifying the cypher:
+The encrypted, base-64 encoded data is stored as UTF8-encoded JSON, along with the base-64 encoded [iv](http://en.wikipedia.org/wiki/Initialisation_vector), a truncated, encrypted hash of the encryption password ('masterkey') and a string identifying the cypher:
 
     {
         "data": "snXFsnWoX2nm/NrE+zlYOrxUAVtw7tMDEqM8PWdGMhSgMA7wFO7zojaqiCdwT7EWJ0o5hVEdaOX7Wi1LGh7E3A==", 
