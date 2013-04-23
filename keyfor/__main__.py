@@ -18,9 +18,25 @@ import getpass
 import subprocess
 from docopt import docopt
 from key import KeyChain, MasterKey, Key, VERSION
+import ConfigParser
 
-# FIXME: config should be stored in ~/.keyfor
-config = {'key_path': '~/Dropbox/apps/keyfor', 'password_length': 12}
+def read_config():
+    GENERAL = 'General'
+    path = os.path.expanduser('~/.keyfor')
+    defaults = {
+        'key_path': '~/Dropbox/apps/Key For', 
+        'password_length': 12
+        }
+    config = ConfigParser.RawConfigParser(defaults)
+    config.read(path)
+    return {
+            'key_path': config.get(GENERAL, 'key_path'),
+            'password_length': config.get(GENERAL, 'password_length'),                
+            }
+
+config = read_config()
+
+# print repr(config)
 
 def get_credentials(username=None, password=None):
     """Asks the user to input a username & password, using previous values or appropriately derived defaults"""

@@ -68,7 +68,11 @@ Verifies that the credentials stored for example.com were encrypted with your ke
 
 ## Configuration
 
-TBC
+Configuration is read from the file `~/.keyfor`. The defaults configuration is:
+
+    [DEFAULT]
+    key_path = ~/Dropbox/apps/Key For
+    password_length = 12
 
 ## Encryption
 
