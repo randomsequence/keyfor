@@ -31,7 +31,7 @@ def read_config():
     config.read(path)
     return {
             'key_path': config.get(GENERAL, 'key_path'),
-            'password_length': config.get(GENERAL, 'password_length'),                
+            'password_length': config.getint(GENERAL, 'password_length'),                
             }
 
 config = read_config()
