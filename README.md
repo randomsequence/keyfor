@@ -104,9 +104,9 @@ The encrypted, base-64 encoded data is stored as UTF8-encoded JSON, along with t
 
 ## Dependencies
 
-    * [keyring](https://bitbucket.org/kang/python-keyring-lib)
-    * [pycrypto](https://www.dlitz.net/software/pycrypto/)
-    * [docopt](https://github.com/docopt/docopt)
+* [keyring](https://bitbucket.org/kang/python-keyring-lib)
+* [pycrypto](https://www.dlitz.net/software/pycrypto/)
+* [docopt](https://github.com/docopt/docopt)
 
 ## Notes
 
