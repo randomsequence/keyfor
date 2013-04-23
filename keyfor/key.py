@@ -222,7 +222,8 @@ class KeyChain(object):
         labels = []
         for root, dirs, files in os.walk(self.path):
             for name in files:
-                labels.append(name)
+                if name[0:1] != '.':
+                    labels.append(name)
         return labels
 
 class Key(object):
