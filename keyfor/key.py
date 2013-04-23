@@ -178,7 +178,8 @@ class KeyChain(object):
         self.path = path
         self.masterkey = masterkey
         
-        # FIXME: create path if doesn't exists
+        if not os.path.exists(path):
+            os.makedirs(path)
 
     def verify_key(self, label):
         path = os.path.join(self.path, label)
