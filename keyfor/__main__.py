@@ -29,6 +29,8 @@ def read_config():
         }
     config = ConfigParser.RawConfigParser(defaults)
     config.read(path)
+    if not config.has_section(GENERAL):
+        config.add_section(GENERAL)
     return {
             'key_path': config.get(GENERAL, 'key_path'),
             'password_length': config.getint(GENERAL, 'password_length'),                
