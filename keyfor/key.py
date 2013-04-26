@@ -8,10 +8,7 @@ import base64
 import math
 
 from random import sample, choice
-
 from Crypto.Cipher import AES
-
-VERSION = '0.1.0'
 
 class Cypher(object):
     """Encrypt & decrypt strings with the given password and iv"""

@@ -17,8 +17,9 @@ import keyring
 import getpass
 import subprocess
 from docopt import docopt
-from key import KeyChain, MasterKey, Key, VERSION
+from key import KeyChain, MasterKey, Key
 import ConfigParser
+from keyfor import VERSION
 
 def read_config():
     GENERAL = 'General'
