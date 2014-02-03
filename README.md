@@ -74,6 +74,17 @@ Configuration is read from the file `~/.keyfor`. The default configuration is:
     key_path = ~/Dropbox/apps/Key For   # Where your key files are stored
     password_length = 12                # Length for randomly generated passwords
 
+## Label tab completion in zsh
+
+Make sure autocompletion is enabled in your shell, typically by adding this to your .zshrc:
+
+    autoload -U compinit && compinit
+
+Modify key_path in `zshrc-completion.zsh` to match your configuration. Copy `keyfor-completion.zsh` somewhere (e.g. ~/.keyfor-completion.zsh)
+and put the following in your .zshrc:
+
+    source ~/.zshrc-completion.zsh
+
 ## Encryption
 
 The default encryption scheme in keyfor is AES 256, CBC mode, padded with [PKCS#7][]. 
