@@ -1,10 +1,10 @@
 import unittest
-from keyfor.key import Key, MasterKey, Cypher, CypherAES256
+from keyfor.key import Key, MasterKey, Cypher, CypherAES256, CypherAES256HMAC
 
 class KeyforTest(unittest.TestCase):
 
     def test_cypher(self):
-        cyphers = (Cypher, CypherAES256)
+        cyphers = (Cypher, CypherAES256, CypherAES256HMAC)
         for CypherClass in cyphers:
             plaintext = "Hi, how are you?"
             password = "secret1"

@@ -9,6 +9,7 @@ import math
 
 from random import sample, choice
 from Crypto.Cipher import AES
+from Crypto.Hash import HMAC, SHA
 
 class Cypher(object):
     """Encrypt & decrypt strings with the given password and iv"""
@@ -72,8 +73,8 @@ class CypherAES256(Cypher):
         for i in range(padding):
             cleartxt.append(chr(padding))
         
-        ciphertext = cypher.encrypt("".join(map(chr, cleartxt)))
-        return (self.iv, ciphertext)
+        cyphertext = cypher.encrypt("".join(map(chr, cleartxt)))
+        return (self.iv, cyphertext)
 
     def decrypt(self, cyphertext):
 
@@ -89,6 +90,39 @@ class CypherAES256(Cypher):
         out_data = out_data[:-padding]
 
         return "".join(map(chr, out_data))
+
+class CypherAES256HMAC(CypherAES256):
+    
+    def cypher_name(self):
+        return 'AES_CBC_256_16_HMAC'
+    
+    def hmac(self, cyphertext):
+        h = HMAC.new(self.password, digestmod=SHA)
+        h.update(bytearray(cyphertext))
+        return h.digest()
+    
+    def encrypt(self, string):
+        iv, cyphertext = super(CypherAES256HMAC, self).encrypt(string)
+        
+        hmac = self.hmac(cyphertext)
+        cyphertext = json.dumps({
+            'hmac': base64.b64encode(hmac),
+            'cyphertext': base64.b64encode(cyphertext)
+        })
+        
+        return (iv, cyphertext)
+        
+    def decrypt(self, cyphertext):
+        
+        payload = json.loads(cyphertext.decode("utf-8"))
+        hmac = base64.b64decode(payload['hmac'])
+        cyphertext = base64.b64decode(payload['cyphertext'])
+        plaintext = None
+
+        if hmac == self.hmac(cyphertext):
+            plaintext = super(CypherAES256HMAC, self).decrypt(cyphertext)
+        
+        return plaintext
 
 class MasterKey(object):
     """A master password used to encrypt keys. Generally stored in your device keychain"""
@@ -151,7 +185,7 @@ class MasterKey(object):
 
         iv = base64.b64decode(data['iv'])
 
-        cyphers = {'AES_CBC_256_16': CypherAES256, 'cleartext': Cypher}
+        cyphers = {'AES_CBC_256_16_HMAC': CypherAES256HMAC, 'AES_CBC_256_16': CypherAES256, 'cleartext': Cypher}
         
         if 'cypher' in data and data['cypher'] in cyphers:
             cypher = cyphers[data['cypher']](iv=iv, password=self.password)
