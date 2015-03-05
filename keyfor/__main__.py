@@ -1,13 +1,14 @@
 """keyfor - create, store & retrieve passwords with pluggable AES encryption
 
 Usage:
-  keyfor [add | edit | delete | verify | refresh] [-u <username>] <label>
+  keyfor [add | edit | delete | verify | refresh] [-u <username>] [-s <subset>] <label>
   keyfor all [verify | refresh | list]
   keyfor (-h | --help)
   keyfor --version
 
 Options:
   -u --username Keychain username
+  -s --subset   Copy a subset of the password to the clipboard, for example: 1,2,5. Indexes begin at 1, not 0
   -h --help     Show this screen
   --version     Show version"""
 
@@ -92,9 +93,16 @@ def copy_to_clipboard(msg):
         print('{} -- {}'.format(CLIPBOARD_CMD, err))
         print('{} is probably not installed'.format(CLIPBOARD_CMD))
         
-def show_key(key):
+def show_key(key, subset):
     print "username for " + key.label + ": " + key.username +", ",
-    copy_to_clipboard(key.password)
+    password = key.password
+    if subset:
+        indexes = subset.split(",")
+        password = ''
+        for index in indexes:
+            print "subset index "+str(int(index)-1)
+            password += key.password[int(index)-1]
+    copy_to_clipboard(password)
     print "password copied to clipboard"    
 
 def key_exists(keychain, label):
@@ -136,6 +144,9 @@ def main():
     
     if '<label>' in args and args['<label>']:
         label = args['<label>']
+        subset = args['<subset>']
+        
+        print subset
         
         if 'add' in args and args['add']:
             keys = keychain.list_keys()
@@ -147,7 +158,7 @@ def main():
             key = Key(label=label, username=credentials['username'], password=credentials['password'])
             keychain.save_key(key)
             print "created new key for: "+key.label
-            show_key(key)
+            show_key(key, subset)
             
         elif 'edit' in args and args['edit']:
             key = read_key(keychain, label)
@@ -157,7 +168,7 @@ def main():
                 key.password = credentials['password']
                 keychain.save_key(key)
                 print "Updated key for label: " + label
-                show_key(key)
+                show_key(key, subset)
                 
         elif 'delete' in args and args['delete']:
             if key_exists(keychain, label):
@@ -174,7 +185,7 @@ def main():
         else:
             key = read_key(keychain, label)
             if key:
-                show_key(key)
+                show_key(key, subset)
                 
     elif 'all' in args and args['all']:
                 
