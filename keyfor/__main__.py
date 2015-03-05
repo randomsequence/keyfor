@@ -100,7 +100,6 @@ def show_key(key, subset):
         indexes = subset.split(",")
         password = ''
         for index in indexes:
-            print "subset index "+str(int(index)-1)
             password += key.password[int(index)-1]
     copy_to_clipboard(password)
     print "password copied to clipboard"    
@@ -145,8 +144,6 @@ def main():
     if '<label>' in args and args['<label>']:
         label = args['<label>']
         subset = args['<subset>']
-        
-        print subset
         
         if 'add' in args and args['add']:
             keys = keychain.list_keys()
