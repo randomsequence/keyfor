@@ -6,7 +6,7 @@ Keyfor stores each username & password combination ('key') in a separate encrypt
 
 ##Synposis
 
-    keyfor [add | edit | delete | verify | refresh] [--username=USER] (<label> | <label> <subset>)
+    keyfor [add | edit | delete | verify | refresh] [--username=USER] [--print] (<label> | <label> <subset>)
     keyfor all [verify | refresh | list]
     keyfor (-h | --help)
     keyfor --version
