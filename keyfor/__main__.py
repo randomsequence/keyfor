@@ -1,7 +1,7 @@
 """keyfor - create, store & retrieve passwords with pluggable AES encryption
 
 Usage:
-  keyfor [add | edit | delete | verify | refresh] [--username=USER] (<label> | <label> <subset>)
+  keyfor [add | edit | delete | verify | refresh] [--username=USER] [--print] (<label> | <label> <subset>)
   keyfor all [verify | refresh | list]
   keyfor (-h | --help)
   keyfor --version
@@ -93,16 +93,21 @@ def copy_to_clipboard(msg):
         print('{} -- {}'.format(CLIPBOARD_CMD, err))
         print('{} is probably not installed'.format(CLIPBOARD_CMD))
         
-def show_key(key, subset):
+def show_key(key, subset, shoud_print=False):
     print "username for " + key.label + ": " + key.username +", ",
     password = key.password
+    indexString = ""
     if subset:
+        indexString = " (" + subset + ")"
         indexes = subset.split(",")
         password = ''
         for index in indexes:
             password += key.password[int(index)-1]
-    copy_to_clipboard(password)
-    print "password copied to clipboard"    
+    if shoud_print:
+        print "password" + indexString + ": " + password
+    else:
+        copy_to_clipboard(password)
+        print "password copied to clipboard"
 
 def key_exists(keychain, label):
     keys = keychain.list_keys()
@@ -138,7 +143,7 @@ def main():
 
     masterkey = get_masterkey(username=args['--username'])
     keychain = KeyChain(path=os.path.expanduser(config['key_path']), masterkey=masterkey)
-    
+        
     if '<label>' in args and args['<label>']:
         label = args['<label>']
         subset = args['<subset>']
@@ -180,7 +185,8 @@ def main():
         else:
             key = read_key(keychain, label)
             if key:
-                show_key(key, subset)
+                shoud_print = '--print' in args and args['--print']
+                show_key(key, subset, shoud_print=shoud_print)
                 
     elif 'all' in args and args['all']:
                 
