@@ -31,9 +31,11 @@ What it does:
 3. Prints your username in bold, and any notes you stored.
 4. Copies your password to the clipboard
 
+### get subset
+
     keyfor example.com 1,2,5
 
-As above, but only the first, second and fifth characters of the password are copied to the clipboard
+As get, but only the first, second and fifth characters of the password are copied to the clipboard
 
 ### add
 
