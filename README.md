@@ -6,10 +6,10 @@ Keyfor stores each username & password combination ('key') in a separate encrypt
 
 ##Synposis
 
-    keyfor [add | edit | delete | verify | refresh] [-u <username>] <label>
-            all [verify | refresh | list]
-            (-h | --help)
-            --version
+    keyfor [add | edit | delete | verify | refresh] [--username=USER] (<label> | <label> <subset>)
+    keyfor all [verify | refresh | list]
+    keyfor (-h | --help)
+    keyfor --version
 
 ##Install
 
@@ -30,6 +30,10 @@ What it does:
 2. Search your system keychain for an application password named 'keyfor'. Use your keychain password to decrypt the password
 3. Prints your username in bold, and any notes you stored.
 4. Copies your password to the clipboard
+
+    keyfor example.com 1,2,5
+
+As above, but only the first, second and fifth characters of the password are copied to the clipboard
 
 ### add
 

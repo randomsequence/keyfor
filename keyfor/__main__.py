@@ -1,16 +1,16 @@
 """keyfor - create, store & retrieve passwords with pluggable AES encryption
 
 Usage:
-  keyfor [add | edit | delete | verify | refresh] [-u <username>] [-s <subset>] <label>
+  keyfor [add | edit | delete | verify | refresh] [--username=USER] (<label> | <label> <subset>)
   keyfor all [verify | refresh | list]
   keyfor (-h | --help)
   keyfor --version
 
 Options:
-  -u --username Keychain username
-  -s --subset   Copy a subset of the password to the clipboard, for example: 1,2,5. Indexes begin at 1, not 0
-  -h --help     Show this screen
-  --version     Show version"""
+  --username=USER   Keychain username
+  subset            Copy a subset of the password to the clipboard, for example: 1,2,5. Indexes begin at 1, not 0
+  -h --help         Show this screen
+  --version         Show version"""
 
 import sys
 import os
@@ -133,10 +133,8 @@ def refresh_key(keychain, label):
         keychain.save_key(key)
         print "refreshed key for: "+key.label
 
-def main():    
+def main():
     args = docopt(__doc__, version='keyfor '+VERSION)
-    
-    # print repr(args)
 
     masterkey = get_masterkey(username=args['--username'])
     keychain = KeyChain(path=os.path.expanduser(config['key_path']), masterkey=masterkey)
